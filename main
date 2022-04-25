@@ -1,0 +1,51 @@
+import sys
+from form import *
+from PyQt6 import QtCore, QtGui, QtWidgets
+
+
+class MyWin(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        QtWidgets.QWidget.__init__(self, parent)
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+
+        # Вешаем на кнопку функцию reshen
+        self.ui.pushButton.clicked.connect(self.reshen)
+        # Вешаем на кнопку функцию очистки
+        self.ui.pushButton_2.clicked.connect(self.clean)
+
+
+    # Описываем функцию 
+    def reshen(self):
+        # Очищаем второе текстовое поле
+        #self.ui.textEdit_2.setText("")
+
+        # В переменную a получаем текст из a поля ввода
+        a = (int(self.ui.textEdit_6.toPlainText()))
+        # В переменную b получаем текст из y поля ввода
+        b = (int(self.ui.textEdit.toPlainText()))
+        # В переменную m получаем текст из y поля ввода
+        m = (int(self.ui.textEdit_3.toPlainText()))
+
+        rezultat = "" 
+        # Вычисляем
+        for x in range(m):
+            if (a*x%m) == (b%m):
+                rezultat = rezultat + 'x ≡ ' + str(x) + ' mod '+ str(m) + '\n'
+        if rezultat=='':
+            rezultat = 'нет решений'
+
+        # rezultat=str(float(a)*float(b))
+        
+
+       
+        # Выводим в правое поле переменную результат с количеством слогов в строке
+        self.ui.textEdit_2.setText(rezultat)
+    def clean(self):
+        self.ui.textEdit_2.setText('напишите сравнение')
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    myapp = MyWin()
+    myapp.show()
+    sys.exit(app.exec())
